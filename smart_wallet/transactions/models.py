@@ -23,11 +23,22 @@ class Transaction(models.Model):
         ('saving', 'Saving')
     ]
     wallet = models.ForeignKey('user.Wallet', on_delete=models.CASCADE, related_name='transactions')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES)
     date = models.DateTimeField(auto_now_add=True)
     description = models.TextField(null=True, blank=True)
+    budget = models.ForeignKey(
+    'Budget',
+    on_delete=models.CASCADE,
+    related_name='transactions',
+    null=True,
+    blank=True
+    )
+    saving_goals = models.ForeignKey('SavingGoals'
+                                     ,on_delete=models.CASCADE
+                                     ,related_name='transactions'
+                                     ,null=True
+                                     ,blank=True)
 
     def __str__(self):
         return f"{self.date} --> {self.wallet}"

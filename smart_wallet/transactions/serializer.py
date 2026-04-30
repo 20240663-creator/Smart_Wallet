@@ -1,13 +1,32 @@
 from rest_framework import serializers
+from user import serializer as user_serializer
 from . import models
 
 
+class SavingGoalsSerializer(serializers.ModelSerializer):
+    class Meta():
+        model = models.SavingGoals
+        fields = "__all__"
+    
 
+    
 
 class TransactionSerializer(serializers.ModelSerializer):
+    wallet = user_serializer.WalletSerializer(read_only=True)
+    
+    saving_goals = serializers.SlugRelatedField(
+        queryset=models.SavingGoals.objects.all(),
+        slug_field='name'
+    )
+
+    saving_goals_details = SavingGoalsSerializer(
+        source='saving_goals',
+        read_only=True
+    )
     class Meta():
         model = models.Transaction
-        fields = "__all__"
+        fields = ['id','wallet','amount','type','description','date','budget','saving_goals','saving_goals_details']
+        
 
     def validate(self, data):
         user = self.context['request'].user
@@ -23,19 +42,36 @@ class TransactionSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Not enough money")
 
         return data
+    
+    def create(self, validated_data):
+        return models.Transaction.objects.create(**validated_data)
         
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    wallet = user_serializer.WalletSerializer(read_only=True)
     class Meta():
         model = models.Category
         fields = "__all__"
+
+    def validate(self, data):
+        wallet = self.context['request'].user.wallet           
+        name = data['name']
+
+
+        if models.Category.objects.filter(wallet=wallet, name=name).exists():
+            raise serializers.ValidationError("Category already exists in this wallet")
+
+        return data
 
 
 class BudgetSerializer(serializers.ModelSerializer):
     class Meta():
         model = models.Budget
         fields = "__all__"
+        extra_kwargs = {
+            "wallet": {"read_only": True}
+        }
 
 
     def validate(self, data):
@@ -50,10 +86,14 @@ class BudgetSerializer(serializers.ModelSerializer):
         return data
     
     def create(self, validated_data):
+        validated_data.pop('wallet', None)  
         user = self.context['request'].user
         wallet = user.wallet
+
 
         return models.Budget.objects.create(
             wallet=wallet,
             **validated_data
         )
+
+

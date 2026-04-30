@@ -9,18 +9,25 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         return bool(request.user and request.user.is_staff)
     
 
-
-class IsOwnerOfWallet(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
+class IsOwnerBase(permissions.BasePermission):
+    def is_owner(self, request, obj):
         return obj.wallet.user == request.user
-    
 
-
-class IsMyCategory(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        return obj.wallet.user == request.user
-    
+        if request.user.is_staff:
+            return True
+        return self.is_owner(request, obj)
 
-class IsMyBudget(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return obj.wallet.user == request.user
+
+
+class IsOwnerOfWallet(IsOwnerBase):
+    pass
+
+class IsMyCategory(IsOwnerBase):
+    pass
+
+class IsMyBudget(IsOwnerBase):
+    pass
+
+class IsMySaving(IsOwnerBase):
+    pass
