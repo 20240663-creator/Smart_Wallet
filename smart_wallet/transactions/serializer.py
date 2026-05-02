@@ -13,11 +13,14 @@ class SavingGoalsSerializer(serializers.ModelSerializer):
 
 class TransactionSerializer(serializers.ModelSerializer):
     wallet = user_serializer.WalletSerializer(read_only=True)
+    reciever = user_serializer.WalletSerializer(read_only=True)
     
     saving_goals = serializers.SlugRelatedField(
-        queryset=models.SavingGoals.objects.all(),
-        slug_field='name'
-    )
+    queryset=models.SavingGoals.objects.all(),
+    slug_field='name',
+    required=False,
+    allow_null=True
+)
 
     saving_goals_details = SavingGoalsSerializer(
         source='saving_goals',
@@ -25,11 +28,12 @@ class TransactionSerializer(serializers.ModelSerializer):
     )
     class Meta():
         model = models.Transaction
-        fields = ['id','wallet','amount','type','description','date','budget','saving_goals','saving_goals_details']
+        fields = ['id','wallet','reciever','amount','type','description','date','budget','saving_goals','saving_goals_details']
         
 
     def validate(self, data):
         user = self.context['request'].user
+        reciever = data.get('reciever')
 
         if not hasattr(user, 'wallet'):
             raise serializers.ValidationError("User has no wallet")
@@ -37,6 +41,12 @@ class TransactionSerializer(serializers.ModelSerializer):
         wallet = user.wallet
         amount = data.get('amount')
         transaction_type = data.get('type')
+
+        if transaction_type == 'send' and not reciever:
+            raise serializers.ValidationError("You shoud detrmine the reciever")
+        
+        if transaction_type == 'send' and reciever == wallet:
+            raise serializers.ValidationError("You can not send money to yourself")
 
         if transaction_type != 'income' and amount > wallet.total_balance:
             raise serializers.ValidationError("Not enough money")

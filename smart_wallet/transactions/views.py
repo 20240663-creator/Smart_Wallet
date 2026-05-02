@@ -3,6 +3,7 @@ from rest_framework import  generics
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
+from django.db.models import Q
 from . import models
 from . import serializer
 from . import permessions
@@ -24,6 +25,7 @@ class TransactionsViewSets(ModelViewSet):
         type = serializer.validated_data['type']
         budget = serializer.validated_data.get('budget')
         goal = serializer.validated_data.get('saving_goals')
+        reciever = serializer.validated_data.get('reciever')
 
         if type == 'income':
             wallet.total_balance += amount
@@ -50,6 +52,16 @@ class TransactionsViewSets(ModelViewSet):
             wallet.total_balance -= amount
             wallet.total_expense += amount
             wallet.save()
+        elif type == 'send':
+            if amount > wallet.total_balance:
+                raise ValidationError("Not enough balance")
+            reciever.total_balance += amount
+            reciever.total_income += amount
+            wallet.total_balance -= amount
+            wallet.total_expense += amount
+            reciever.save()
+            wallet.save()
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 
         serializer.save(wallet=wallet)
 
@@ -65,7 +77,10 @@ class TransactionsViewSets(ModelViewSet):
         if self.request.user.is_staff:
             return queryset
         
-        return queryset.filter(wallet__user=self.request.user)
+        return queryset.filter(
+        Q(wallet__user=self.request.user) |
+        Q(reciever__user=self.request.user)
+        )
     
 
 class CategoryViewSets(ModelViewSet):

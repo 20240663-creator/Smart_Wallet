@@ -13,15 +13,20 @@ class Category(models.Model):
         unique_together = ('wallet', 'name')
 
     def __str__(self):
-        return f"{self.wallet} --> {self.name}"
+        return f"{self.name}"
 
 
 class Transaction(models.Model):
     TYPE_CHOICES = [
-        ('income', 'Income'),
+        ('income' , 'Income'),
         ('expense', 'Expense'),
-        ('saving', 'Saving')
+        ('saving' , 'Saving'),
+        ('send'   , 'Sending')
     ]
+    reciever = models.ForeignKey('user.Wallet',
+        on_delete=models.CASCADE,
+        null = True,
+        blank = True)
     wallet = models.ForeignKey('user.Wallet', on_delete=models.CASCADE, related_name='transactions')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES)
@@ -35,10 +40,10 @@ class Transaction(models.Model):
     blank=True
     )
     saving_goals = models.ForeignKey('SavingGoals'
-                                     ,on_delete=models.CASCADE
-                                     ,related_name='transactions'
-                                     ,null=True
-                                     ,blank=True)
+        ,on_delete=models.CASCADE
+        ,related_name='transactions'
+        ,null=True
+        ,blank=True)
 
     def __str__(self):
         return f"{self.date} --> {self.wallet}"
@@ -59,7 +64,7 @@ class Budget(models.Model):
     percentage = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.category.name} -> {self.wallet}"
+        return f"{self.category.name}"
 
 
 class SavingGoals(models.Model):
@@ -75,5 +80,5 @@ class SavingGoals(models.Model):
     status = models.CharField(max_length=255,choices=choices, default='in_progress')
 
     def __str__(self):
-        return f"{self.name} -> {self.wallet}"
+        return f"{self.name}"
     
