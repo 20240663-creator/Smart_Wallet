@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Wallet - View Report</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body id="report-body">
     <header id="report-header">
         <nav id="report-nav">
             <div class="logo">💰 Smart Wallet</div>
             <ul class="nav-links">
-                <li><a href="{% url 'home' %}">Dashboard</a></li>
-                <li><a href="{% url 'transactions' %}">Transactions</a></li>
-                <li><a href="{% url 'settings' %}">Settings</a></li>
-                <li><a href="{% url 'profile' %}">Profile</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="transaction.html">Transactions</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="intro.html">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -30,15 +29,15 @@
         <div class="report-summary">
             <div class="summary-card">
                 <h3>Total Income</h3>
-                <p class="amount positive">${{ user.total_income|default:0 }}</p>
+                <p class="amount positive">$10000</p>
             </div>
             <div class="summary-card">
                 <h3>Total Expenses</h3>
-                <p class="amount negative">${{ user.total_expense|default:0 }}</p>
+                <p class="amount negative">$3000</p>
             </div>
             <div class="summary-card">
                 <h3>Net Balance</h3>
-                <p class="amount">${{ user.total_balance|default:0 }}</p>
+                <p class="amount">$7000</p>
             </div>
         </div>
 
@@ -55,19 +54,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for t in transaction %}
+                    
                     <tr>
-                        <td>{{ t.date }}</td>
-                        <td>{{ t.description }}</td>
-                        <td>{{ t.status }}</td>
-                        <td class="{% if t.sender == user and t.transaction_type != 'Deposit' %}amount-negative{% else %}amount-positive{% endif %}">${{ t.amount }}</td>
-                        <td>{% if user != t.sender %} Receive {% else %} {{ t.transaction_type }} {% endif %}</td>
+                        <td>May 1, 2026</td>
+                        <td>Grocery shopping</td>
+                        <td>Completed</td>
+                        <td class="amount-negative">$-50.00</td>
+                        <td>Expense</td>
                     </tr>
-                    {% empty %}
+                    
                     <tr>
                         <td colspan="5">No transactions found.</td>
                     </tr>
-                    {% endfor %}
+                    
                 </tbody>
             </table>
         </div>

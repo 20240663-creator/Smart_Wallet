@@ -1,24 +1,23 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Money - Smart Wallet</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/send_money.css' %}">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/send_money.css">
 </head>
 <body id="send-money-body">
     <header id="send-money-header">
         <nav id="send-money-nav">
             <div class="logo">💰 Smart Wallet</div>
             <ul class="nav-links">
-                <li><a href="{% url 'home' %}">Dashboard</a></li>
-                <li><a href="{% url 'transactions' %}">Transactions</a></li>
-                <li><a href="{% url 'send_money' %}">Send Money</a></li>
-                <li><a href="{% url 'request_money' %}">Request Money</a></li>
-                <li><a href="{% url 'profile' %}">Profile</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="transaction.html">Transactions</a></li>
+                <li><a href="send_money.html">Send Money</a></li>
+                <li><a href="request_money.html">Request Money</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="intro.html">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -32,7 +31,7 @@
         <div class="send-money-wrapper">
             <div class="send-form-card">
                 <form id="sendMoneyForm" class="send-form" method="post">
-                    {% csrf_token %}
+                    
                     <div class="form-group">
                         <label for="recipientName">Recipient Name:</label>
                         <input type="text" id="recipientName" name="recipient" class="form-control" placeholder="Enter recipient name" required>
@@ -84,7 +83,7 @@
                 <h3>Quick Stats</h3>
                 <div class="stats-item">
                     <span class="stats-label">Available Balance:</span>
-                    <span class="stats-value">{{user.total_balance}}</span>
+                    <span class="stats-value">$7000.00</span>
                 </div>
                 <div class="stats-item">
                     <span class="stats-label">Today's Transfers:</span>
@@ -117,10 +116,10 @@
                 {% for send in sends %}
                 <div class="transfer-item">
                     <div class="transfer-info">
-                        <div class="transfer-recipient">{{ send.receiver }}</div>
-                        <div class="transfer-date">{{ send.date }}</div>
+                        <div class="transfer-recipient">user22</div>
+                        <div class="transfer-date">date</div>
                     </div>
-                    <div class="transfer-amount">- {{ send.amount }}</div>
+                    <div class="transfer-amount">- 1000</div>
                 </div>
                 {% endfor %}
             </div>

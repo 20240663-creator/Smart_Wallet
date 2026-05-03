@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Wallet - Register</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="../static/css/style.css" />
 </head>
 <body id="login-body">
     <div id="login-card">
@@ -14,12 +13,8 @@
             <p>Sign up to start using Smart Wallet</p>
         </header>
 
-        <form id="login-form" method="post" action="{% url 'register' %}">
-            {% csrf_token %}
-
-            {% if error %}
-                <div class="form-error" style="color:#dc2626;padding:12px 16px;background:#fef2f2;border-radius:10px;border:1px solid #fecaca;margin-bottom:20px;font-size:0.95rem;">{{ error }}</div>
-            {% endif %}
+        <form id="login-form" method="post" action="register.html">
+            
 
             <div style="margin-bottom:20px;">
                 <label class="login-label" for="name">Full Name</label>
@@ -45,7 +40,7 @@
         </form>
 
         <div id="login-footer">
-            Already have an account? <a href="{% url 'login' %}" id="login-link-home">Sign In</a>
+            Already have an account? <a href="login.html" id="login-link-home">Sign In</a>
         </div>
     </div>
 </body>

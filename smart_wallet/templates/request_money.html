@@ -1,24 +1,23 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Request Money - Smart Wallet</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/request_money.css' %}">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/request_money.css">
 </head>
 <body id="request-money-body">
     <header id="request-money-header">
         <nav id="request-money-nav">
             <div class="logo">💰 Smart Wallet</div>
             <ul class="nav-links">
-                <li><a href="{% url 'home' %}">Dashboard</a></li>
-                <li><a href="{% url 'transactions' %}">Transactions</a></li>
-                <li><a href="{% url 'send_money' %}">Send Money</a></li>
-                <li><a href="{% url 'request_money' %}">Request Money</a></li>
-                <li><a href="{% url 'profile' %}">Profile</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="transaction.html">Transactions</a></li>
+                <li><a href="send_money.html">Send Money</a></li>
+                <li><a href="request_money.html">Request Money</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="intro.html">Logout</a></li>
             </ul>
         </nav>
     </header>

@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Wallet - Transactions</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="../static/css/style.css" />
 </head>
 <body id="transaction-page">
     <header id="transaction-header">
         <div class="logo">💰 Smart Wallet</div>
         <div class="transaction-nav">
-            <a href="{% url 'home' %}" class="nav-link">Home</a>
-            <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="intro.html" class="nav-link">Logout</a>
         </div>
     </header>
 
@@ -34,11 +33,11 @@
                 <tbody>
                     
                         <tr>
-                            <td>{{ tx.date }}</td>
-                            <td>{{ tx.status }}</td>
-                            <td>{% if user != tx.sender %} Receive {% else %} {{ tx.transaction_type }} {% endif %}</td>
-                            <td class="amount  {% if tx.amount < 0 %}amount-negative{% else %}amount-positive{% endif %}">{{ tx.amount|floatformat:2 }}</td>
-                            <td>${{ total_balance|floatformat:2 }}</td>
+                            <td>May 1, 2026</td>
+                            <td>Completed</td>
+                            <td>Send</td>
+                            <td class="amount amount-negative">-50.00</td>
+                            <td>$6950.00</td>
                         </tr>
                         <tr>
                             <td colspan="5" class="empty-state">No transactions found yet. Start by adding one.</td>
