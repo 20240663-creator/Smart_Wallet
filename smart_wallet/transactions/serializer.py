@@ -7,7 +7,6 @@ class SavingGoalsSerializer(serializers.ModelSerializer):
     class Meta():
         model = models.SavingGoals
         fields = "__all__"
-    
 
     
 
@@ -28,7 +27,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     )
     class Meta():
         model = models.Transaction
-        fields = ['id','wallet','reciever','amount','type','description','date','budget','saving_goals','saving_goals_details']
+        fields = ['id','wallet','reciever','amount','type','description','date','budget','saving_goals','saving_goals_details','fee']
         
 
     def validate(self, data):

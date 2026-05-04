@@ -27,6 +27,7 @@ class Transaction(models.Model):
         on_delete=models.CASCADE,
         null = True,
         blank = True)
+    fee = models.DecimalField(max_digits=10,decimal_places=2,default=0)
     wallet = models.ForeignKey('user.Wallet', on_delete=models.CASCADE, related_name='transactions')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES)

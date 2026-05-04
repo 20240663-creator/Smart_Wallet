@@ -26,8 +26,8 @@ INSTALLED_APPS = [
     'djoser',
     'user',
     'transactions',
-    'notifications',        # US #11
-    'advisor',              # BONUS — AI Financial Advisor
+    'Notifications',        # US #11
+    'advisor_chatbot',              # BONUS — AI Financial Advisor
 ]
 
 MIDDLEWARE = [

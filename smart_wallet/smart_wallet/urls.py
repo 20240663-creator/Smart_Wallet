@@ -34,8 +34,8 @@ urlpatterns = [
     path('admin/',         admin.site.urls),
     path('user/',          include('user.urls')),
     path('transactions/',  include('transactions.urls')),
-    path('notifications/', include('notifications.urls')),   # US #11
-    path('advisor/',       include('advisor.urls')),          # BONUS
+    path('notifications/', include('Notifications.urls')),   # US #11
+    path('advisor/',       include('advisor_chatbot.urls')),          # BONUS
     path('auth/',          include('djoser.urls')),
     path('auth/',          include('djoser.urls.jwt')),
 ]

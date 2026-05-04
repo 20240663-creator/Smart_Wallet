@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Advisor - Smart Wallet</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body id="advisor-body">
+    <header id="advisor-header">
+        <nav id="advisor-nav">
+            <div class="logo">💰 Smart Wallet</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="budget.html">Budgets</a></li>
+                <li><a href="saving_goals.html">Goals</a></li>
+                <li><a href="categories.html">Categories</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="advisor-container">
+        <div class="advisor-card">
+            <div class="advisor-header">
+                <div class="advisor-icon">🤖</div>
+                <div class="advisor-info">
+                    <h1>Financial Advisor</h1>
+                    <p>Ask me anything about your finances</p>
+                </div>
+            </div>
+
+            <div class="chat-container" id="chatContainer">
+                <div class="message advisor-message">
+                    Hello! 👋 I'm your financial advisor. Ask me any questions about your spending, budgets, or financial goals. I'll analyze your data and provide personalized advice!
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="messageInput" placeholder="Ask me a question..." />
+                <button onclick="sendMessage()">Send</button>
+            </div>
+
+            <div>
+                <p style="color: #666; margin-bottom: 15px; font-size: 14px;">Quick Questions:</p>
+                <div class="quick-questions">
+                    <button class="question-btn" onclick="askQuestion('Am I overspending on any categories?')">Am I overspending?</button>
+                    <button class="question-btn" onclick="askQuestion('How am I doing with my saving goals?')">Saving Goals Status</button>
+                    <button class="question-btn" onclick="askQuestion('What is my total balance?')">Check Balance</button>
+                    <button class="question-btn" onclick="askQuestion('How much have I spent this month?')">Monthly Spending</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Smart Wallet. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                askQuestion(message);
+                input.value = '';
+            }
+        }
+
+        function askQuestion(question) {
+            const chatContainer = document.getElementById('chatContainer');
+            
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = question;
+            chatContainer.appendChild(userMessage);
+            
+            // Scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // Simulate loading
+            const loadingMessage = document.createElement('div');
+            loadingMessage.className = 'message advisor-message';
+            loadingMessage.textContent = 'Analyzing your finances...';
+            chatContainer.appendChild(loadingMessage);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // TODO: Send to backend API
+            // fetch('/advisor/ask/', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'X-CSRFToken': getCookie('csrftoken')
+            //     },
+            //     body: JSON.stringify({ message: question })
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     loadingMessage.textContent = data.response;
+            // })
+            // .catch(error => {
+            //     loadingMessage.textContent = 'Error getting response. Please try again.';
+            // });
+        }
+
+        // Enter key to send message
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

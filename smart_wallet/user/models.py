@@ -18,6 +18,6 @@ class Wallet(models.Model):
     total_balance = models.DecimalField(max_digits=12, decimal_places=2,default=0)
     total_income = models.DecimalField(max_digits=12, decimal_places=2,default=0)
     total_expense = models.DecimalField(max_digits=12, decimal_places=2,default=0)
-
+    send_limit = models.PositiveBigIntegerField(default=3)
     def __str__(self):
         return f"{self.user} -- wallet"

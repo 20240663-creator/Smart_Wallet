@@ -3,7 +3,8 @@ from rest_framework import  generics
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
-from django.db.models import Q
+from rest_framework.response import Response
+from django.db.models import Q, Sum
 from . import models
 from . import serializer
 from . import permessions
@@ -53,12 +54,27 @@ class TransactionsViewSets(ModelViewSet):
             wallet.total_expense += amount
             wallet.save()
         elif type == 'send':
+            fee = 0
+
             if amount > wallet.total_balance:
                 raise ValidationError("Not enough balance")
+
+            if wallet.send_limit > 0:
+                wallet.send_limit -= 1
+            else:
+                fee = 2.0
+
+            total_deduction = amount + fee
+
+            if total_deduction > wallet.total_balance:
+                raise ValidationError("Not enough balance after fee")
+
             reciever.total_balance += amount
             reciever.total_income += amount
-            wallet.total_balance -= amount
-            wallet.total_expense += amount
+
+            wallet.total_balance -= total_deduction
+            wallet.total_expense += total_deduction
+
             reciever.save()
             wallet.save()
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
@@ -122,5 +138,43 @@ class SavingGoalsViewSets(ModelViewSet):
         if self.request.user.is_staff:
             return self.query
         return self.query.filter(wallet=self.request.user.wallet)
-    
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        total_target = queryset.aggregate(
+            total=Sum('target_amount')
+        )['total'] or 0
+
+        total_current = queryset.aggregate(
+            current=Sum('current_amount')
+        )['current'] or 0
+
+        complete_percentage = (
+            round((total_current / total_target) * 100, 2)
+            if total_target else 0
+        )
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            response = self.get_paginated_response(serializer.data)
+            response.data.update({
+                'summary': {
+                    'total_target': total_target,
+                    'total_current': total_current,
+                    'complete_percentage': complete_percentage,
+                }
+            })
+            return response
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'summary': {
+                'total_target': total_target,
+                'total_current': total_current,
+                'complete_percentage': complete_percentage,
+            },
+            'saving_goals': serializer.data,
+        })
 
