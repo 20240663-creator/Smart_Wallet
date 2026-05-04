@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from django.db.models import Q, Sum
+from Notifications.models import Notification
 from . import models
 from . import serializer
 from . import permessions
@@ -32,27 +33,53 @@ class TransactionsViewSets(ModelViewSet):
             wallet.total_balance += amount
             wallet.total_income += amount
             wallet.save()
+            Notification.objects.create(
+            user=wallet.user,
+            type='GENERAL',
+            message=f"Income added: +{amount}"
+            )
         elif type == 'expense':
             if amount > wallet.total_balance:
                 raise ValidationError("Not enough balance")
             
             if budget:
-                if budget.spended + amount > budget.amount:
-                    raise ValidationError("Exceed the limit of budget")
                 budget.spended += amount
                 budget.percentage = (budget.spended / budget.amount) * 100
                 budget.save()
+                if budget.spended >= budget.amount:
+                    Notification.objects.create(
+                        user=wallet.user,
+                        type='BUDGET_EXCEEDED',
+                        message=f"You exceeded budget for {budget.category.name}"
+                    )
+                else:
+                    Notification.objects.create(
+                        user=wallet.user,
+                        type='BUDGET_ALERT',
+                        message=f"Budget update: {budget.category.name} is now {budget.percentage:.1f}% used"
+                    )
 
             if goal:
                 if goal.current_amount + amount > goal.target_amount:
                     raise ValidationError("Exceed the limit of goal")
-                if goal.current_amount + amount == goal.target_amount:
+
+                goal.current_amount += amount
+
+                if goal.current_amount >= goal.target_amount:
                     goal.status = 'complete'
-                goal.current_amount += amount 
+                    Notification.objects.create(
+                        user=wallet.user,
+                        type='GOAL_COMPLETE',
+                        message=f"🎉 Goal completed: {goal.name}"
+                    )
+                else:
+                    Notification.objects.create(
+                        user=wallet.user,
+                        type='GOAL_PROGRESS',
+                        message=f"Saving goal updated: {goal.name} ({goal.current_amount}/{goal.target_amount})"
+                    )
+
                 goal.save()
-            wallet.total_balance -= amount
-            wallet.total_expense += amount
-            wallet.save()
         elif type == 'send':
             fee = 0
 
@@ -77,9 +104,19 @@ class TransactionsViewSets(ModelViewSet):
 
             reciever.save()
             wallet.save()
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+            Notification.objects.create(
+            user=reciever.user,
+            type='GENERAL',
+            message=f"You received {amount} from {wallet.user}"
+            )
 
-        serializer.save(wallet=wallet)
+            Notification.objects.create(
+                user=wallet.user,
+                type='GENERAL',
+                message=f"You sent {amount} successfully"
+            )
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
 
 
     def get_queryset(self):
