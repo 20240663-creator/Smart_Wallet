@@ -69,7 +69,6 @@ class TransactionsViewSets(ModelViewSet):
     def get_queryset(self):
         queryset = models.Transaction.objects.all()
         type = self.request.query_params.get('type')
-        wallet = self.request
 
         if type is not None:
             queryset = queryset.filter(type=type)
