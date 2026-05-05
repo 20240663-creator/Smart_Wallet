@@ -3,135 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notifications - Smart Wallet</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Smart Wallet - Notifications</title>
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <style>
+        
+    </style>
 </head>
-<body id="notifications-body">
-    <header id="notifications-header">
-        <nav id="notifications-nav">
+<body>
+    <header class="main-header">
+        <nav class="nav-container">
             <div class="logo">💰 Smart Wallet</div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html">Dashboard</a></li>
                 <li><a href="budget.html">Budgets</a></li>
                 <li><a href="saving_goals.html">Goals</a></li>
                 <li><a href="advisor.html">Advisor</a></li>
+                <li><a href="transactions.html">Transactions</a></li>
                 <li><a href="profile.html">Profile</a></li>
             </ul>
+            <button class="logout-btn" id="logout-btn" style="background: rgba(0,0,0,0.1); border: none; padding: 0.5rem 1rem; border-radius: var(--radius-md); cursor: pointer;">🚪 Logout</button>
         </nav>
     </header>
 
-    <div class="notifications-container">
+    <main class="container">
         <div class="notifications-header">
-            <h1>Notifications</h1>
-            <button class="mark-all-read-btn">Mark All as Read</button>
+            <div>
+                <h1>🔔 Notifications</h1>
+                <p style="color: var(--gray);">Stay updated with your financial activities</p>
+            </div>
+            <button class="mark-all-btn" onclick="markAllAsRead()">✓ Mark all as read</button>
         </div>
 
+        <!-- Filter Tabs -->
         <div class="filter-tabs">
-            <button class="filter-tab active" onclick="filterNotifications('all')">All</button>
-            <button class="filter-tab" onclick="filterNotifications('budget')">Budget</button>
-            <button class="filter-tab" onclick="filterNotifications('goal')">Goals</button>
-            <button class="filter-tab" onclick="filterNotifications('unread')">Unread</button>
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="unread">Unread</button>
+            <button class="filter-tab" data-filter="budget">Budget Alerts</button>
+            <button class="filter-tab" data-filter="goal">Goal Updates</button>
+            <button class="filter-tab" data-filter="transaction">Transactions</button>
         </div>
 
-        <div id="notificationsContainer">
-            <!-- Budget Alert -->
-            <div class="notification-card unread budget-notification">
-                <div class="notification-icon budget">📊</div>
-                <div class="notification-content">
-                    <div class="notification-type">Budget Alert</div>
-                    <div class="notification-message">You've reached 80% of your Food budget</div>
-                    <div class="notification-time">2 hours ago</div>
-                </div>
-                <div class="notification-actions">
-                    <button class="notification-btn mark-read-btn">Mark as Read</button>
-                    <button class="notification-btn delete-btn">Delete</button>
-                </div>
-            </div>
+        <!-- Notifications List -->
+        <div id="notificationsList"></div>
+    </main>
 
-            <!-- Goal Progress -->
-            <div class="notification-card goal-notification">
-                <div class="notification-icon goal">🎯</div>
-                <div class="notification-content">
-                    <div class="notification-type">Goal Progress</div>
-                    <div class="notification-message">Your Vacation Fund is now 50% complete</div>
-                    <div class="notification-time">1 day ago</div>
-                </div>
-                <div class="notification-actions">
-                    <button class="notification-btn mark-read-btn">Mark as Read</button>
-                    <button class="notification-btn delete-btn">Delete</button>
-                </div>
-            </div>
-
-            <!-- Goal Completed -->
-            <div class="notification-card goal-notification">
-                <div class="notification-icon goal">✅</div>
-                <div class="notification-content">
-                    <div class="notification-type">Goal Complete</div>
-                    <div class="notification-message">Congratulations! You've completed your Emergency Fund goal</div>
-                    <div class="notification-time">3 days ago</div>
-                </div>
-                <div class="notification-actions">
-                    <button class="notification-btn mark-read-btn">Mark as Read</button>
-                    <button class="notification-btn delete-btn">Delete</button>
-                </div>
-            </div>
-
-            <!-- General Notification -->
-            <div class="notification-card general-notification">
-                <div class="notification-icon general">ℹ️</div>
-                <div class="notification-content">
-                    <div class="notification-type">General</div>
-                    <div class="notification-message">Your monthly budget reset is complete</div>
-                    <div class="notification-time">5 days ago</div>
-                </div>
-                <div class="notification-actions">
-                    <button class="notification-btn mark-read-btn">Mark as Read</button>
-                    <button class="notification-btn delete-btn">Delete</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Empty State (hidden by default) -->
-        <div class="empty-state" style="display: none;">
-            <div class="empty-state-icon">🔔</div>
-            <h2>No Notifications</h2>
-            <p>You're all caught up! Check back later for updates.</p>
-        </div>
-    </div>
-
-    <footer>
+    <footer class="main-footer">
         <p>&copy; 2026 Smart Wallet. All rights reserved.</p>
     </footer>
 
-    <script>
-        function filterNotifications(type) {
-            // Update active tab
-            document.querySelectorAll('.filter-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // Filter logic would go here
-            console.log('Filtering by:', type);
-        }
-
-        document.querySelectorAll('.mark-read-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.parentElement.parentElement.classList.remove('unread');
-            });
-        });
-
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.parentElement.parentElement.remove();
-            });
-        });
-
-        document.querySelector('.mark-all-read-btn').addEventListener('click', function() {
-            document.querySelectorAll('.notification-card').forEach(card => {
-                card.classList.remove('unread');
-            });
-        });
-    </script>
+    <script src="../static/js/config.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/notifications.js"></script>
+    
+    
 </body>
 </html>

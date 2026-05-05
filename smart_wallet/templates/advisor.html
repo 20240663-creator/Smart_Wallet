@@ -3,115 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Advisor - Smart Wallet</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Smart Wallet - AI Financial Advisor</title>
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <style>
+        
+    </style>
 </head>
-<body id="advisor-body">
-    <header id="advisor-header">
-        <nav id="advisor-nav">
+<body>
+    <header class="main-header">
+        <nav class="nav-container">
             <div class="logo">💰 Smart Wallet</div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html">Dashboard</a></li>
                 <li><a href="budget.html">Budgets</a></li>
                 <li><a href="saving_goals.html">Goals</a></li>
-                <li><a href="categories.html">Categories</a></li>
-                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="advisor.html">Advisor</a></li>
+                <li><a href="transactions.html">Transactions</a></li>
                 <li><a href="profile.html">Profile</a></li>
             </ul>
+            <button class="logout-btn" id="logout-btn" style="background: rgba(0,0,0,0.1); border: none; padding: 0.5rem 1rem; border-radius: var(--radius-md); cursor: pointer;">🚪 Logout</button>
         </nav>
     </header>
 
-    <div class="advisor-container">
-        <div class="advisor-card">
-            <div class="advisor-header">
-                <div class="advisor-icon">🤖</div>
-                <div class="advisor-info">
-                    <h1>Financial Advisor</h1>
-                    <p>Ask me anything about your finances</p>
+    <main class="container advisor-container">
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                <div style="width: 60px; height: 60px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem;">🤖</div>
+                <div>
+                    <h1 style="color: var(--primary);">AI Financial Advisor</h1>
+                    <p style="color: var(--gray);">Ask me anything about your finances</p>
                 </div>
             </div>
 
             <div class="chat-container" id="chatContainer">
                 <div class="message advisor-message">
-                    Hello! 👋 I'm your financial advisor. Ask me any questions about your spending, budgets, or financial goals. I'll analyze your data and provide personalized advice!
+                    <div class="message-content">
+                        Hello! 👋 I'm your AI financial advisor. I can help you with:<br>
+                        • Tracking your spending habits<br>
+                        • Budget optimization tips<br>
+                        • Saving goal strategies<br>
+                        • Investment recommendations<br><br>
+                        What would you like to know today?
+                    </div>
                 </div>
+            </div>
+
+            <div class="quick-questions">
+                <button class="quick-question-btn" onclick="askQuestion('Am I overspending on any categories?')">💰 Am I overspending?</button>
+                <button class="quick-question-btn" onclick="askQuestion('How can I save more money this month?')">📈 Saving tips</button>
+                <button class="quick-question-btn" onclick="askQuestion('What is my total balance and spending summary?')">📊 My summary</button>
+                <button class="quick-question-btn" onclick="askQuestion('How am I doing with my saving goals?')">🎯 Goal progress</button>
+                <button class="quick-question-btn" onclick="askQuestion('Give me advice for better financial planning')">💡 Financial advice</button>
             </div>
 
             <div class="input-group">
-                <input type="text" id="messageInput" placeholder="Ask me a question..." />
-                <button onclick="sendMessage()">Send</button>
-            </div>
-
-            <div>
-                <p style="color: #666; margin-bottom: 15px; font-size: 14px;">Quick Questions:</p>
-                <div class="quick-questions">
-                    <button class="question-btn" onclick="askQuestion('Am I overspending on any categories?')">Am I overspending?</button>
-                    <button class="question-btn" onclick="askQuestion('How am I doing with my saving goals?')">Saving Goals Status</button>
-                    <button class="question-btn" onclick="askQuestion('What is my total balance?')">Check Balance</button>
-                    <button class="question-btn" onclick="askQuestion('How much have I spent this month?')">Monthly Spending</button>
-                </div>
+                <input type="text" id="messageInput" placeholder="Type your question here..." />
+                <button class="send-btn" onclick="sendMessage()">Send →</button>
             </div>
         </div>
-    </div>
+    </main>
 
-    <footer>
+    <footer class="main-footer">
         <p>&copy; 2026 Smart Wallet. All rights reserved.</p>
     </footer>
 
-    <script>
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-            
-            if (message) {
-                askQuestion(message);
-                input.value = '';
-            }
-        }
-
-        function askQuestion(question) {
-            const chatContainer = document.getElementById('chatContainer');
-            
-            // Add user message
-            const userMessage = document.createElement('div');
-            userMessage.className = 'message user-message';
-            userMessage.textContent = question;
-            chatContainer.appendChild(userMessage);
-            
-            // Scroll to bottom
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-
-            // Simulate loading
-            const loadingMessage = document.createElement('div');
-            loadingMessage.className = 'message advisor-message';
-            loadingMessage.textContent = 'Analyzing your finances...';
-            chatContainer.appendChild(loadingMessage);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-
-            // TODO: Send to backend API
-            // fetch('/advisor/ask/', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'X-CSRFToken': getCookie('csrftoken')
-            //     },
-            //     body: JSON.stringify({ message: question })
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     loadingMessage.textContent = data.response;
-            // })
-            // .catch(error => {
-            //     loadingMessage.textContent = 'Error getting response. Please try again.';
-            // });
-        }
-
-        // Enter key to send message
-        document.getElementById('messageInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-    </script>
+    <script src="../static/js/config.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/advisor.js"></script>
 </body>
 </html>

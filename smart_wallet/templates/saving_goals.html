@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saving Goals - Smart Wallet</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body id="goals-body">
     <header id="goals-header">
@@ -49,19 +49,19 @@
 
         <!-- New Goal Form -->
         <div class="goal-form" id="goalForm">
-            <h2 style="margin-bottom: 20px; color: #333;">Create New Saving Goal</h2>
+            <h2 style="margin-bottom: 20px;">Create New Saving Goal</h2>
             <div class="form-group">
                 <label>Goal Name</label>
-                <input type="text" placeholder="e.g., Vacation Fund" />
+                <input type="text" placeholder="e.g., Vacation Fund" class="form-control" />
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label>Target Amount</label>
-                    <input type="number" placeholder="Enter target amount" />
+                    <input type="number" placeholder="Enter target amount" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label>Target Date</label>
-                    <input type="date" />
+                    <input type="date" class="form-control" />
                 </div>
             </div>
             <div class="form-buttons">
@@ -75,9 +75,7 @@
 
         <div class="goal-card">
             <div class="goal-header">
-                <div>
-                    <div class="goal-title">🏖️ Vacation Fund</div>
-                </div>
+                <div class="goal-title">🏖️ Vacation Fund</div>
                 <span class="goal-status in-progress">In Progress</span>
             </div>
             <div class="goal-progress-section">
@@ -90,22 +88,10 @@
                 </div>
             </div>
             <div class="goal-details">
-                <div class="detail-item">
-                    <div class="detail-label">Saved</div>
-                    <div class="detail-value primary">$1,950</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Target</div>
-                    <div class="detail-value">$3,000</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Remaining</div>
-                    <div class="detail-value">$1,050</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Deadline</div>
-                    <div class="detail-value">Aug 31, 2026</div>
-                </div>
+                <div><div class="detail-label">Saved</div><div class="detail-value primary">$1,950</div></div>
+                <div><div class="detail-label">Target</div><div class="detail-value">$3,000</div></div>
+                <div><div class="detail-label">Remaining</div><div class="detail-value">$1,050</div></div>
+                <div><div class="detail-label">Deadline</div><div class="detail-value">Aug 31, 2026</div></div>
             </div>
             <div class="goal-actions">
                 <button class="goal-btn contribute-btn">Contribute</button>
@@ -116,9 +102,7 @@
 
         <div class="goal-card">
             <div class="goal-header">
-                <div>
-                    <div class="goal-title">🏠 Home Renovation</div>
-                </div>
+                <div class="goal-title">🏠 Home Renovation</div>
                 <span class="goal-status in-progress">In Progress</span>
             </div>
             <div class="goal-progress-section">
@@ -131,22 +115,10 @@
                 </div>
             </div>
             <div class="goal-details">
-                <div class="detail-item">
-                    <div class="detail-label">Saved</div>
-                    <div class="detail-value primary">$2,250</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Target</div>
-                    <div class="detail-value">$5,000</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Remaining</div>
-                    <div class="detail-value">$2,750</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Deadline</div>
-                    <div class="detail-value">Dec 31, 2026</div>
-                </div>
+                <div><div class="detail-label">Saved</div><div class="detail-value">$2,250</div></div>
+                <div><div class="detail-label">Target</div><div class="detail-value">$5,000</div></div>
+                <div><div class="detail-label">Remaining</div><div class="detail-value">$2,750</div></div>
+                <div><div class="detail-label">Deadline</div><div class="detail-value">Dec 31, 2026</div></div>
             </div>
             <div class="goal-actions">
                 <button class="goal-btn contribute-btn">Contribute</button>
@@ -157,9 +129,7 @@
 
         <div class="goal-card">
             <div class="goal-header">
-                <div>
-                    <div class="goal-title">🚗 New Car Down Payment</div>
-                </div>
+                <div class="goal-title">🚗 New Car Down Payment</div>
                 <span class="goal-status in-progress">In Progress</span>
             </div>
             <div class="goal-progress-section">
@@ -172,22 +142,10 @@
                 </div>
             </div>
             <div class="goal-details">
-                <div class="detail-item">
-                    <div class="detail-label">Saved</div>
-                    <div class="detail-value primary">$1,500</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Target</div>
-                    <div class="detail-value">$5,000</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Remaining</div>
-                    <div class="detail-value">$3,500</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Deadline</div>
-                    <div class="detail-value">Jun 30, 2027</div>
-                </div>
+                <div><div class="detail-label">Saved</div><div class="detail-value">$1,500</div></div>
+                <div><div class="detail-label">Target</div><div class="detail-value">$5,000</div></div>
+                <div><div class="detail-label">Remaining</div><div class="detail-value">$3,500</div></div>
+                <div><div class="detail-label">Deadline</div><div class="detail-value">Jun 30, 2027</div></div>
             </div>
             <div class="goal-actions">
                 <button class="goal-btn contribute-btn">Contribute</button>
@@ -201,9 +159,7 @@
 
         <div class="goal-card">
             <div class="goal-header">
-                <div>
-                    <div class="goal-title">✅ Emergency Fund</div>
-                </div>
+                <div class="goal-title">✅ Emergency Fund</div>
                 <span class="goal-status completed">Completed</span>
             </div>
             <div class="goal-progress-section">
@@ -216,22 +172,10 @@
                 </div>
             </div>
             <div class="goal-details">
-                <div class="detail-item">
-                    <div class="detail-label">Saved</div>
-                    <div class="detail-value primary">$3,000</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Target</div>
-                    <div class="detail-value">$3,000</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Remaining</div>
-                    <div class="detail-value">$0</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Completed</div>
-                    <div class="detail-value">Apr 15, 2026</div>
-                </div>
+                <div><div class="detail-label">Saved</div><div class="detail-value">$3,000</div></div>
+                <div><div class="detail-label">Target</div><div class="detail-value">$3,000</div></div>
+                <div><div class="detail-label">Remaining</div><div class="detail-value">$0</div></div>
+                <div><div class="detail-label">Completed</div><div class="detail-value">Apr 15, 2026</div></div>
             </div>
             <div class="goal-actions">
                 <button class="goal-btn edit-btn">Edit</button>
