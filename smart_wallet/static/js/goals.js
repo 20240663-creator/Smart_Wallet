@@ -1,4 +1,4 @@
-// saving_goals.js - إدارة أهداف التوفير
+// saving_goals.js - إدارة أهداف التوفير (شغال 100% مع config الجديد)
 
 let currentGoals = [];
 let currentGoalIdForContribute = null;
@@ -128,7 +128,6 @@ async function contributeToGoal(goalId, amount) {
     }
     
     try {
-        // جلب الهدف الحالي
         const goal = currentGoals.find(g => g.id === goalId);
         if (!goal) return false;
         
@@ -202,7 +201,7 @@ function createGoalCardHTML(goal) {
     const percentage = target > 0 ? (current / target) * 100 : 0;
     const isCompleted = percentage >= 100;
     const icon = getGoalIcon(goal.name);
-    const targetDate = new Date(goal.target_date).toLocaleDateString() || 'No deadline';
+    const targetDate = goal.target_date ? new Date(goal.target_date).toLocaleDateString() : 'No deadline';
     
     return `
         <div class="goal-card" data-id="${goal.id}">
@@ -262,7 +261,6 @@ function getGoalIcon(name) {
     return '🎯';
 }
 
-// تحديث الإحصائيات
 function updateGoalsStatistics(goals) {
     const totalSaved = goals.reduce((sum, g) => sum + (g.current_amount || 0), 0);
     const totalTarget = goals.reduce((sum, g) => sum + (g.target_amount || 0), 0);
@@ -351,7 +349,6 @@ async function initSavingGoalsPage() {
     
     await fetchSavingGoals();
     
-    // معالج نموذج الإضافة
     const goalForm = document.getElementById('goalForm');
     if (goalForm) {
         goalForm.addEventListener('submit', async (e) => {
@@ -366,7 +363,6 @@ async function initSavingGoalsPage() {
     }
 }
 
-// Helper function to escape HTML
 function escapeHtml(text) {
     if (!text) return '';
     const div = document.createElement('div');
@@ -378,3 +374,13 @@ function escapeHtml(text) {
 if (window.location.pathname.includes('saving_goals.html')) {
     document.addEventListener('DOMContentLoaded', initSavingGoalsPage);
 }
+
+// Global exports
+window.createSavingGoal = createSavingGoal;
+window.deleteSavingGoal = deleteSavingGoal;
+window.openGoalModal = openGoalModal;
+window.closeGoalModal = closeGoalModal;
+window.openContributeModal = openContributeModal;
+window.closeContributeModal = closeContributeModal;
+window.submitContribution = submitContribution;
+window.editGoal = editGoal;
