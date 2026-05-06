@@ -28,158 +28,63 @@
         </div>
 
         <!-- Goals Statistics -->
-        <div class="goals-stats">
+        <div class="goals-stats" id="goalsStats">
             <div class="stats-card">
                 <div class="stats-label">Total Saved</div>
-                <div class="stats-value">$4,250</div>
+                <div class="stats-value" id="totalSaved">$4,250</div>
             </div>
             <div class="stats-card">
                 <div class="stats-label">Total Target</div>
-                <div class="stats-value">$10,000</div>
+                <div class="stats-value" id="totalTarget">$10,000</div>
             </div>
             <div class="stats-card">
                 <div class="stats-label">Goals Completed</div>
-                <div class="stats-value">2</div>
+                <div class="stats-value" id="completedCount">2</div>
             </div>
             <div class="stats-card">
                 <div class="stats-label">Active Goals</div>
-                <div class="stats-value">3</div>
+                <div class="stats-value" id="activeCount">3</div>
             </div>
         </div>
 
-        <!-- New Goal Form -->
+        <!-- New Goal Form (ADDED missing IDs for goals.js) -->
         <div class="goal-form" id="goalForm">
             <h2 style="margin-bottom: 20px;">Create New Saving Goal</h2>
             <div class="form-group">
                 <label>Goal Name</label>
-                <input type="text" placeholder="e.g., Vacation Fund" class="form-control" />
+                <input type="text" id="goalName" placeholder="e.g., Vacation Fund" class="form-control" />
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label>Target Amount</label>
-                    <input type="number" placeholder="Enter target amount" class="form-control" />
+                    <input type="number" id="goalTarget" placeholder="Enter target amount" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label>Target Date</label>
-                    <input type="date" class="form-control" />
+                    <input type="date" id="goalDate" class="form-control" />
                 </div>
             </div>
             <div class="form-buttons">
                 <button class="form-btn cancel" onclick="toggleForm()">Cancel</button>
-                <button class="form-btn save">Create Goal</button>
+                <button class="form-btn save" onclick="createSavingGoal()">Create Goal</button>
             </div>
         </div>
 
-        <!-- Active Goals -->
-        <h2 style="color: white; margin: 30px 0 20px 0; font-size: 20px;">Active Goals</h2>
+        <!-- Goals List (where JS will inject goals) -->
+        <div id="goalsList"></div>
+    </div>
 
-        <div class="goal-card">
-            <div class="goal-header">
-                <div class="goal-title">🏖️ Vacation Fund</div>
-                <span class="goal-status in-progress">In Progress</span>
+    <!-- Contribute Modal (for goals.js) -->
+    <div id="contributeModal" class="modal">
+        <div class="modal-content">
+            <h3>💰 Contribute to Goal</h3>
+            <div class="form-group">
+                <label>Amount to Contribute</label>
+                <input type="number" id="contributeAmount" class="form-control" placeholder="Enter amount" />
             </div>
-            <div class="goal-progress-section">
-                <div class="progress-info">
-                    <span class="progress-text">Progress</span>
-                    <span class="progress-percentage">65%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 65%"></div>
-                </div>
-            </div>
-            <div class="goal-details">
-                <div><div class="detail-label">Saved</div><div class="detail-value primary">$1,950</div></div>
-                <div><div class="detail-label">Target</div><div class="detail-value">$3,000</div></div>
-                <div><div class="detail-label">Remaining</div><div class="detail-value">$1,050</div></div>
-                <div><div class="detail-label">Deadline</div><div class="detail-value">Aug 31, 2026</div></div>
-            </div>
-            <div class="goal-actions">
-                <button class="goal-btn contribute-btn">Contribute</button>
-                <button class="goal-btn edit-btn">Edit</button>
-                <button class="goal-btn delete-btn">Delete</button>
-            </div>
-        </div>
-
-        <div class="goal-card">
-            <div class="goal-header">
-                <div class="goal-title">🏠 Home Renovation</div>
-                <span class="goal-status in-progress">In Progress</span>
-            </div>
-            <div class="goal-progress-section">
-                <div class="progress-info">
-                    <span class="progress-text">Progress</span>
-                    <span class="progress-percentage">45%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 45%"></div>
-                </div>
-            </div>
-            <div class="goal-details">
-                <div><div class="detail-label">Saved</div><div class="detail-value">$2,250</div></div>
-                <div><div class="detail-label">Target</div><div class="detail-value">$5,000</div></div>
-                <div><div class="detail-label">Remaining</div><div class="detail-value">$2,750</div></div>
-                <div><div class="detail-label">Deadline</div><div class="detail-value">Dec 31, 2026</div></div>
-            </div>
-            <div class="goal-actions">
-                <button class="goal-btn contribute-btn">Contribute</button>
-                <button class="goal-btn edit-btn">Edit</button>
-                <button class="goal-btn delete-btn">Delete</button>
-            </div>
-        </div>
-
-        <div class="goal-card">
-            <div class="goal-header">
-                <div class="goal-title">🚗 New Car Down Payment</div>
-                <span class="goal-status in-progress">In Progress</span>
-            </div>
-            <div class="goal-progress-section">
-                <div class="progress-info">
-                    <span class="progress-text">Progress</span>
-                    <span class="progress-percentage">30%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 30%"></div>
-                </div>
-            </div>
-            <div class="goal-details">
-                <div><div class="detail-label">Saved</div><div class="detail-value">$1,500</div></div>
-                <div><div class="detail-label">Target</div><div class="detail-value">$5,000</div></div>
-                <div><div class="detail-label">Remaining</div><div class="detail-value">$3,500</div></div>
-                <div><div class="detail-label">Deadline</div><div class="detail-value">Jun 30, 2027</div></div>
-            </div>
-            <div class="goal-actions">
-                <button class="goal-btn contribute-btn">Contribute</button>
-                <button class="goal-btn edit-btn">Edit</button>
-                <button class="goal-btn delete-btn">Delete</button>
-            </div>
-        </div>
-
-        <!-- Completed Goals -->
-        <h2 style="color: white; margin: 30px 0 20px 0; font-size: 20px;">Completed Goals</h2>
-
-        <div class="goal-card">
-            <div class="goal-header">
-                <div class="goal-title">✅ Emergency Fund</div>
-                <span class="goal-status completed">Completed</span>
-            </div>
-            <div class="goal-progress-section">
-                <div class="progress-info">
-                    <span class="progress-text">Progress</span>
-                    <span class="progress-percentage">100%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100%"></div>
-                </div>
-            </div>
-            <div class="goal-details">
-                <div><div class="detail-label">Saved</div><div class="detail-value">$3,000</div></div>
-                <div><div class="detail-label">Target</div><div class="detail-value">$3,000</div></div>
-                <div><div class="detail-label">Remaining</div><div class="detail-value">$0</div></div>
-                <div><div class="detail-label">Completed</div><div class="detail-value">Apr 15, 2026</div></div>
-            </div>
-            <div class="goal-actions">
-                <button class="goal-btn edit-btn">Edit</button>
-                <button class="goal-btn delete-btn">Delete</button>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button class="btn btn-secondary" onclick="closeContributeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitContribution()">Contribute</button>
             </div>
         </div>
     </div>
@@ -188,9 +93,26 @@
         <p>&copy; 2026 Smart Wallet. All rights reserved.</p>
     </footer>
 
+    <script src="../static/js/config.js"></script>
+    <script src="../static/js/auth.js"></script>
+    <script src="../static/js/goals.js"></script>
+    
     <script>
         function toggleForm() {
             document.getElementById('goalForm').classList.toggle('active');
+        }
+        
+        function closeContributeModal() {
+            document.getElementById('contributeModal').classList.remove('active');
+        }
+        
+        function submitContribution() {
+            const amount = document.getElementById('contributeAmount').value;
+            if (amount && currentGoalId) {
+                contributeToGoal(currentGoalId, parseFloat(amount));
+                document.getElementById('contributeModal').classList.remove('active');
+                document.getElementById('contributeAmount').value = '';
+            }
         }
     </script>
 </body>
